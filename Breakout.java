@@ -16,14 +16,15 @@ public class Breakout extends GameLoop{ //Options and setup. Launch this for the
 	}
 	
 	public void paint(Graphics g) { //Display graphics on screen
-		d.clearRect(0,0,800,600);
+		d.clearRect(0,0,800,600); //Clear background
 		
 		d.drawRect(x,y,120,20); //Add to paddle object
 		
-		d.drawOval(xpos, ypos, 20,20); //Add to ball object
+		for(int i = 0; i < balls.length;i++) balls[i].display(d);
+		
 		//Ovals and rects are not drawn from center, but from corner for some reason.
 		
-		g.drawImage(offscreen,0,0,this);
+		g.drawImage(offscreen,0,0,this); //Redraw elements
 	}
 	
 	public void update(Graphics g) {
