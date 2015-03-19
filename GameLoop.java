@@ -3,78 +3,48 @@ import java.awt.event.KeyListener;
 import java.applet.Applet;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
 
 public class GameLoop extends Applet implements Runnable, KeyListener{
 	
-	public int x,y,xpos,ypos,ballSpeedX,ballSpeedY;
+	public static int x,y;
+	public static int ballCount;
 	public Image offscreen;
 	public Graphics d;
-	public boolean up,down,left,right,checkCollision;
+	public boolean left,right,spacebar,checkCollision;
 	public long start;
 	
-	public void run() {
-		x = 400; //Initialization
+	public Ball[] balls = new Ball[10];
+	
+	public void run() { //Initialisation
+		x = 400; 
 		y = 550;
-		checkCollision = true;
 		
-		xpos = 100;
-		ypos = 300;
-		ballSpeedX = 5;
-		ballSpeedY = 5;
+		balls[0] = new Ball(); //Initial ball.
+		balls[0].setPos(50, 50);
+		
+		for(int i = 1; i < balls.length; i++){ //Other balls
+			balls[i] = new Ball();
+			balls[i].setPos(850,650);
+		}
 		
 		while(true) { //The "update" or "main" loop that repeats.
-			xpos += ballSpeedX;
-			ypos += ballSpeedY;
+			ballCount = balls[0].alive+balls[1].alive+balls[2].alive+balls[3].alive+balls[4].alive+balls[5].alive+balls[6].alive+balls[7].alive+balls[8].alive+balls[9].alive;
 			
-			if (xpos < 1 || xpos > 780) { //Reverse direction if ball hits sides
-				ballSpeedX *= -1;
+			for(int i = 0; i < balls.length;i++) balls[i].update();
+			
+			if (left) x -= 5;
+			if (right) x += 5;
+			
+			if(ballCount == 0 && spacebar) {
+				balls[0].setPos(400, 300);
+				balls[0].alive = 1;
 			}
-			
-			if (ypos < 0) { //Reverse direction if ball hits top
-				ballSpeedY *= -1;
-			}
-			
-			if(ypos > 600) { //Reset ball if it hits bottom
-				xpos = 400;
-				ypos = 300;
-			}
-			
-			if(checkCollision == true) {
-				if(xpos < x+120 && xpos > x && ypos > y-20 && ypos < y+18 ) { //Paddle detection top
-					ballSpeedY *= -1;
-					checkCollision = false;
-					start = System.currentTimeMillis();
-				} //Right now the balls path is predetermined. Add some variation based on the balls hit on the paddle.
-				
-				if((xpos < x+130 && xpos > x+120 && ypos > y-20 && ypos < y+18 && ballSpeedX <0)) { //Paddle detection right
-					ballSpeedY *= -1;
-					ballSpeedX *= -1;
-					checkCollision = false; //Disable collisions for a second afterwards to eliminate weird collisions
-					start = System.currentTimeMillis();
-				}
-				
-				if((xpos > x-15 && xpos < x && ypos > y-20 && ypos < y+18 && ballSpeedX >0)) { //Paddle detection left
-					ballSpeedY *= -1;
-					ballSpeedX *= -1;
-					checkCollision = false; //Disable collisions for a second afterwards to eliminate weird collisions
-					start = System.currentTimeMillis();
-				}
-			}
-			
-			if(checkCollision == false) { //Reactivate checkCollision in 1 second. Delay
-				long elapsedTime = System.currentTimeMillis() - start;
-				if(elapsedTime > 1000) checkCollision = true;
-			}
-			
-			if (left) x -= 10;
-			if (right) x += 10;
-			if (up) y--;
-			if (down) y++;
 			
 			repaint(); //Keep updating the display by calling paint
 			
 			try {
-				Thread.sleep(20); //How fast the processor updates
+				Thread.sleep(10); //How long the processor sleeps each cycle. Effectively fps, lower num = higher fps.
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -86,16 +56,14 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 		// TODO Auto-generated method stub
 		if(e.getKeyCode() == 37) left = true;
 		if(e.getKeyCode() == 39) right = true;
-		if(e.getKeyCode() == 38) up = true;
-		if(e.getKeyCode() == 40) down = true;
+		if(e.getKeyCode() == 32) spacebar = true;
 	}
 
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getKeyCode() == 37) left = false;
 		if(e.getKeyCode() == 39) right = false;
-		if(e.getKeyCode() == 38) up = false;
-		if(e.getKeyCode() == 40) down = false;
+		if(e.getKeyCode() == 32) spacebar = false;
 	}
 
 	public void keyTyped(KeyEvent e) {}
