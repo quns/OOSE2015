@@ -6,14 +6,17 @@ public class Ball {
 	int xpos,ypos;
 	int speedX = 3;
 	int speedY = 3;
+	int diameter;
 	
 	int alive = 1;
 	boolean checkCollision = true;
 	
 	long start;
 	
-	public Ball() { //Constructor REQUIRED even if it is empty
-		
+	public Ball(int x, int y) { //Constructor REQUIRED even if it is empty
+		this.xpos = x;
+		this.ypos = y;
+		this.diameter = 20;
 	}
 
 	public void update() {
@@ -31,6 +34,28 @@ public class Ball {
 	}
 	
 	private void UpdateCollision() {
+		
+		for(int i = 0; i < GameLoop.blocks.length;i++) { //Block collision top
+			if(xpos < GameLoop.blocks[i].xpos+35 && xpos > GameLoop.blocks[i].xpos-5 && ypos > GameLoop.blocks[i].ypos-20 && ypos < GameLoop.blocks[i].ypos+18 ) {//Left collision
+				speedY *= -1;
+				GameLoop.blocks[i].health--;
+			}
+		}
+		
+		for(int i = 0; i < GameLoop.blocks.length;i++) { //Block collision Right
+			if(xpos < GameLoop.blocks[i].xpos+45 && xpos > GameLoop.blocks[i].xpos+40 && ypos > GameLoop.blocks[i].ypos-20 && ypos < GameLoop.blocks[i].ypos+18 ) {//Left collision
+				speedX *= -1;
+				GameLoop.blocks[i].health--;
+			}
+		}
+		
+		for(int i = 0; i < GameLoop.blocks.length;i++) { //Block collision Left
+			if(xpos < GameLoop.blocks[i].xpos-5 && xpos > GameLoop.blocks[i].xpos && ypos > GameLoop.blocks[i].ypos-20 && ypos < GameLoop.blocks[i].ypos+18 ) {//Left collision
+				speedX *= -1;
+				GameLoop.blocks[i].health--;
+			}
+		}
+		
 		if (xpos < 1 || xpos > 780) { //Reverse direction if ball hits sides
 			speedX *= -1;
 		}
@@ -74,7 +99,7 @@ public class Ball {
 	}
 	
 	public void display(Graphics d) { //d = layer it will be drawn on
-		d.drawOval(xpos, ypos, 20,20); 
+		d.drawOval(xpos, ypos, diameter,diameter); 
 	}
 	
 }
