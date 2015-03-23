@@ -3,7 +3,6 @@ import java.awt.event.KeyListener;
 import java.applet.Applet;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.ArrayList;
 
 public class GameLoop extends Applet implements Runnable, KeyListener{
 	
@@ -15,23 +14,30 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 	public long start;
 	
 	public Ball[] balls = new Ball[10];
+	public static Block[] blocks = new Block[36];
+	
+	public int counter = 0;
 	
 	public void run() { //Initialisation
 		x = 400; 
 		y = 550;
 		
-		balls[0] = new Ball(); //Initial ball.
-		balls[0].setPos(50, 50);
+		balls[0] = new Ball(50,250); //Initial ball.
+		
+		for(int i = 0; i < 12; i++) blocks[i] = new Block(i*50,0); //Level Construction Example.
+		for(int i = 12; i < 24; i++) blocks[i] = new Block(i*50-600,50); //Make it into a function called "createLevel"
+		for(int i = 24; i < 36; i++) blocks[i] = new Block(i*50-1200,100); //and "if button pressed" create level so it builds once.
 		
 		for(int i = 1; i < balls.length; i++){ //Other balls
-			balls[i] = new Ball();
-			balls[i].setPos(850,650);
+			balls[i] = new Ball(850,650);
 		}
 		
 		while(true) { //The "update" or "main" loop that repeats.
 			ballCount = balls[0].alive+balls[1].alive+balls[2].alive+balls[3].alive+balls[4].alive+balls[5].alive+balls[6].alive+balls[7].alive+balls[8].alive+balls[9].alive;
 			
 			for(int i = 0; i < balls.length;i++) balls[i].update();
+			
+			for(int i = 0; i < blocks.length;i++) blocks[i].update();
 			
 			if (left) x -= 5;
 			if (right) x += 5;
