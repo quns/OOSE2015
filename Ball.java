@@ -33,7 +33,7 @@ public class Ball {
 		ypos = b;
 	}
 	
-	private void UpdateCollision() {
+	private void UpdateCollision() { //NEW CODE. ALL THE NUMBERS IN IF HAVE BEEN REPLACED
 		
 		for(int i = 0; i < GameLoop.blocks.length;i++) { //Block collision top
 			if(xpos < GameLoop.blocks[i].xpos+35 && xpos > GameLoop.blocks[i].xpos-5 && ypos > GameLoop.blocks[i].ypos-20 && ypos < GameLoop.blocks[i].ypos+18 ) {//Left collision
@@ -62,7 +62,6 @@ public class Ball {
 			}
 		}
 		
-		
 		if (xpos < 1 || xpos > 780) { //Reverse direction if ball hits sides
 			speedX *= -1;
 		}
@@ -72,12 +71,12 @@ public class Ball {
 		}
 		
 		if(ypos > 600) { //Reset ball if it hits bottom
-			GameLoop.ballCount--;
+			GameLoop.ballCount--; //Could perhaps be removed
 			alive = 0;
 		}
 		
-		if(checkCollision == true) {
-		if(xpos < GameLoop.x+GameLoop.paddlewidth && xpos > GameLoop.x && ypos > GameLoop.y-GameLoop.paddleheight && ypos < GameLoop.y+GameLoop.paddleheight-2 ) { //Paddle detection top
+		if(checkCollision == true) { //NEW CODE PADDLEWIDTH + HEIGHT
+			if(xpos < GameLoop.x+GameLoop.paddlewidth && xpos > GameLoop.x && ypos > GameLoop.y-GameLoop.paddleheight && ypos < GameLoop.y+GameLoop.paddleheight-2 ) { //Paddle detection top
 				speedY *= -1;
 				//NEW CODE
 				speedX += ((xpos-GameLoop.x)-(0.5f * GameLoop.paddlewidth))/50f; //Vary
