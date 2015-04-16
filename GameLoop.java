@@ -6,21 +6,26 @@ import java.awt.Image;
 
 public class GameLoop extends Applet implements Runnable, KeyListener{
 	
-	public static int x,y;
-	public static int ballCount;
+	public static int x,y,paddlewidth,paddleheight; //NEW CODE PADDLEHEIGHT
+	public static int ballCount, blocksEliminated, powerupsCount;
 	public Image offscreen;
 	public Graphics d;
 	public boolean left,right,spacebar,checkCollision;
 	public long start;
 	
-	public Ball[] balls = new Ball[10];
+	public static Ball[] balls = new Ball[10];
 	public static Block[] blocks = new Block[36];
+	public static Powerup[] powerups = new Powerup[5];
 	
 	public int counter = 0;
 	
 	public void run() { //Initialisation
 		x = 400; 
-		y = 550;
+		y = 550; //NEW CODE PADDLEWIDTH
+		paddleheight = 20;
+		paddlewidth = 120;
+		
+		
 		
 		balls[0] = new Ball(50,250); //Initial ball.
 		
@@ -32,12 +37,21 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 			balls[i] = new Ball(850,650);
 		}
 		
+		for(int i = 0; i < powerups.length; i++){ //Other balls
+			powerups[i] = new Powerup(850,650);
+		}
+		
 		while(true) { //The "update" or "main" loop that repeats.
 			ballCount = balls[0].alive+balls[1].alive+balls[2].alive+balls[3].alive+balls[4].alive+balls[5].alive+balls[6].alive+balls[7].alive+balls[8].alive+balls[9].alive;
+			powerupsCount = powerups[0].alive+powerups[1].alive+powerups[2].alive+powerups[3].alive+powerups[4].alive;
 			
 			for(int i = 0; i < balls.length;i++) balls[i].update();
 			
 			for(int i = 0; i < blocks.length;i++) blocks[i].update();
+			
+			for(int i = 0; i < powerups.length;i++) powerups[i].update();
+			
+			//Multiball for(int i = ballCount; i < balls.length; i++)
 			
 			if (left) x -= 5;
 			if (right) x += 5;
