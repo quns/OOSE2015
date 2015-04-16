@@ -4,8 +4,8 @@ import java.awt.Image;
 
 public class Ball {
 	int xpos,ypos;
-	int speedX = 3;
-	int speedY = 3;
+	float speedX = 3f;
+	float speedY = 3f;
 	int diameter;
 	
 	int alive = 1;
@@ -39,6 +39,12 @@ public class Ball {
 			if(xpos < GameLoop.blocks[i].xpos+35 && xpos > GameLoop.blocks[i].xpos-5 && ypos > GameLoop.blocks[i].ypos-20 && ypos < GameLoop.blocks[i].ypos+18 ) {//Left collision
 				speedY *= -1;
 				GameLoop.blocks[i].health--;
+				//TEST
+				if(GameLoop.powerupsCount < 5) { //Add it so they randomly spawn instead of every time
+				GameLoop.powerups[GameLoop.powerupsCount].setPos(GameLoop.blocks[i].xpos,GameLoop.blocks[i].ypos);
+				GameLoop.powerups[GameLoop.powerupsCount].alive = 1;
+				GameLoop.powerups[GameLoop.powerupsCount].newPower();
+				}
 			}
 		}
 		
@@ -56,6 +62,7 @@ public class Ball {
 			}
 		}
 		
+		
 		if (xpos < 1 || xpos > 780) { //Reverse direction if ball hits sides
 			speedX *= -1;
 		}
@@ -70,20 +77,26 @@ public class Ball {
 		}
 		
 		if(checkCollision == true) {
-			if(xpos < GameLoop.x+120 && xpos > GameLoop.x && ypos > GameLoop.y-20 && ypos < GameLoop.y+18 ) { //Paddle detection top
+		if(xpos < GameLoop.x+GameLoop.paddlewidth && xpos > GameLoop.x && ypos > GameLoop.y-GameLoop.paddleheight && ypos < GameLoop.y+GameLoop.paddleheight-2 ) { //Paddle detection top
 				speedY *= -1;
+				//NEW CODE
+				speedX += ((xpos-GameLoop.x)-(0.5f * GameLoop.paddlewidth))/50f; //Vary
+				if (speedX > 5) speedX = 5; //Clamp speed
+				if (speedX < -5) speedX = -5;
+				// END NEW CODE
 				checkCollision = false;
 				start = System.currentTimeMillis();
+				
 			} //Right now the balls path is predetermined. Add some variation based on the balls hit on the paddle.
 			
-			if((xpos < GameLoop.x+130 && xpos > GameLoop.x+120 && ypos > GameLoop.y-20 && ypos < GameLoop.y+18 && speedX <0)) { //Paddle detection right
+			if((xpos < GameLoop.x+GameLoop.paddlewidth+10 && xpos > GameLoop.x+GameLoop.paddlewidth && ypos > GameLoop.y-GameLoop.paddleheight && ypos < GameLoop.y+GameLoop.paddleheight-2 && speedX <0)) { //Paddle detection right
 				speedY *= -1;
 				speedX *= -1;
 				checkCollision = false; //Disable collisions for a second afterwards to eliminate weird collisions
 				start = System.currentTimeMillis();
 			}
 			
-			if((xpos > GameLoop.x-15 && xpos < GameLoop.x && ypos > GameLoop.y-20 && ypos < GameLoop.y+18 && speedX >0)) { //Paddle detection left
+			if((xpos > GameLoop.x-15 && xpos < GameLoop.x && ypos > GameLoop.y-GameLoop.paddleheight && ypos < GameLoop.y+GameLoop.paddleheight-2 && speedX >0)) { //Paddle detection left
 				speedY *= -1;
 				speedX *= -1;
 				checkCollision = false; //Disable collisions for a second afterwards to eliminate weird collisions
