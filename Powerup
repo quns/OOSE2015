@@ -1,0 +1,83 @@
+import java.awt.Graphics;
+import java.util.Random;
+
+public class Powerup {
+	int xpos,ypos;
+	int powerid;
+	int alive = 1;
+	Random random = new Random();
+	
+	public Powerup(int x, int y) {
+		this.xpos = x;
+		this.ypos = y;
+		int randomint = random.nextInt(4)+1;
+		this.powerid = randomint;
+	}
+	
+	public void update() {
+		if(alive == 1) ypos +=2;
+		if(alive == 0) ypos = 650;
+		
+		if(ypos > 600) alive = 0;
+		
+		if(xpos < GameLoop.x+GameLoop.paddlewidth && xpos > GameLoop.x && ypos > GameLoop.y-GameLoop.paddleheight && ypos < GameLoop.y+GameLoop.paddleheight-2 ) { //Hit Detection
+			System.out.println(powerid);
+			alive = 0;
+			//PLACE POWERUP CODE BELOW
+			if(powerid == 1) { //Find a better way to do the ballcount
+				if(GameLoop.balls[0].alive == 0) {
+				GameLoop.balls[0].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500);
+				GameLoop.balls[0].alive = 1;
+				GameLoop.balls[0].speedX = 2;
+				GameLoop.balls[0].speedY = -2;
+				}
+				else if(GameLoop.balls[1].alive == 0) {
+					GameLoop.balls[1].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500);
+					GameLoop.balls[1].alive = 1;
+					GameLoop.balls[1].speedX = 2;
+					GameLoop.balls[1].speedY = -2;
+				}
+				else if(GameLoop.balls[2].alive == 0) {
+					GameLoop.balls[2].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500);
+					GameLoop.balls[2].alive = 1;
+					GameLoop.balls[2].speedX = 2;
+					GameLoop.balls[2].speedY = -2;
+				}
+				else if(GameLoop.balls[3].alive == 0) {
+					GameLoop.balls[3].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500);
+					GameLoop.balls[3].alive = 1;
+					GameLoop.balls[3].speedX = 2;
+					GameLoop.balls[3].speedY = -2;
+				}
+				else if(GameLoop.balls[4].alive == 0) {
+					GameLoop.balls[4].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500);
+					GameLoop.balls[4].alive = 1;
+					GameLoop.balls[4].speedX = 2;
+					GameLoop.balls[4].speedY = -2;
+				}
+				
+			}
+			if(powerid == 2) {
+				GameLoop.paddlewidth = 250;
+			}
+		}
+		
+	}
+	
+	public void setPos(int x, int y) {
+		xpos = x;
+		ypos = y;
+	}
+	
+	public void newPower() {
+		int randomint = random.nextInt(4)+1;
+		this.powerid = randomint;
+	}
+
+	public void display(Graphics d) {
+		d.drawOval(xpos, ypos, 20,20); 
+	}
+	
+	//Current powerups. Penetration ball, multi ball, paddle widener
+
+}
