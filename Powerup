@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Color;
 import java.util.Random;
 
 public class Powerup {
@@ -20,8 +21,8 @@ public class Powerup {
 		
 		if(ypos > 600) alive = 0;
 		
-		if(xpos < GameLoop.x+GameLoop.paddlewidth && xpos > GameLoop.x && ypos > GameLoop.y-GameLoop.paddleheight && ypos < GameLoop.y+GameLoop.paddleheight-2 ) { //Hit Detection
-			System.out.println(powerid);
+		if(xpos + 20 > GameLoop.x && xpos < GameLoop.x+GameLoop.paddlewidth && ypos + 20 > GameLoop.y && ypos < GameLoop.y + GameLoop.paddleheight) { //Hit Detection
+			//System.out.println(powerid);
 			alive = 0;
 			//PLACE POWERUP CODE BELOW
 			if(powerid == 1) { //Find a better way to do the ballcount
@@ -34,31 +35,40 @@ public class Powerup {
 				else if(GameLoop.balls[1].alive == 0) {
 					GameLoop.balls[1].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500);
 					GameLoop.balls[1].alive = 1;
-					GameLoop.balls[1].speedX = 2;
-					GameLoop.balls[1].speedY = -2;
+					GameLoop.balls[1].speedX = 3;
+					GameLoop.balls[1].speedY = -3;
 				}
 				else if(GameLoop.balls[2].alive == 0) {
 					GameLoop.balls[2].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500);
 					GameLoop.balls[2].alive = 1;
-					GameLoop.balls[2].speedX = 2;
-					GameLoop.balls[2].speedY = -2;
+					GameLoop.balls[2].speedX = 3;
+					GameLoop.balls[2].speedY = -3;
 				}
 				else if(GameLoop.balls[3].alive == 0) {
 					GameLoop.balls[3].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500);
 					GameLoop.balls[3].alive = 1;
-					GameLoop.balls[3].speedX = 2;
-					GameLoop.balls[3].speedY = -2;
+					GameLoop.balls[3].speedX = 3;
+					GameLoop.balls[3].speedY = -3;
 				}
 				else if(GameLoop.balls[4].alive == 0) {
 					GameLoop.balls[4].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500);
 					GameLoop.balls[4].alive = 1;
-					GameLoop.balls[4].speedX = 2;
-					GameLoop.balls[4].speedY = -2;
+					GameLoop.balls[4].speedX = 3;
+					GameLoop.balls[4].speedY = -3;
 				}
 				
 			}
+			
 			if(powerid == 2) {
 				GameLoop.paddlewidth = 250;
+			}
+			
+			if(powerid == 3) {
+				GameLoop.life++;
+			}
+			
+			if(powerid == 4) {
+				GameLoop.pierce = true;
 			}
 		}
 		
@@ -75,7 +85,23 @@ public class Powerup {
 	}
 
 	public void display(Graphics d) {
-		d.drawOval(xpos, ypos, 20,20); 
+		//d.drawOval(xpos, ypos, 20,20); 
+		if(powerid == 1) {
+			d.setColor(Color.red);
+			d.fillOval(xpos, ypos, 20, 20);
+		}
+		else if(powerid == 2) {
+			d.setColor(Color.blue);
+			d.fillOval(xpos, ypos, 20, 20);
+		}
+		else if(powerid == 3) {
+			d.setColor(Color.orange);
+			d.fillOval(xpos, ypos, 20, 20);
+		}
+		else if(powerid == 4){
+			d.setColor(Color.pink);
+			d.fillOval(xpos, ypos, 20, 20);
+		}
 	}
 	
 	//Current powerups. Penetration ball, multi ball, paddle widener
