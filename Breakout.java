@@ -45,4 +45,4 @@ public class Breakout extends GameLoop{ //Options and setup. Launch this for the
 		paint(g);
 	}
 
-}
+} 
