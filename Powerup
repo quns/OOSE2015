@@ -7,11 +7,13 @@ public class Powerup {
 	int powerid;
 	int alive = 1;
 	Random random = new Random();
+	long start;
+	long elapsedTime;
 	
 	public Powerup(int x, int y) {
 		this.xpos = x;
 		this.ypos = y;
-		int randomint = random.nextInt(4)+1;
+		int randomint = random.nextInt(3)+1;
 		this.powerid = randomint;
 	}
 	
@@ -20,6 +22,10 @@ public class Powerup {
 		if(alive == 0) ypos = 650;
 		
 		if(ypos > 600) alive = 0;
+		
+		elapsedTime = System.currentTimeMillis() - start;
+		
+		if(elapsedTime > 10000 && elapsedTime < 10050 ) GameLoop.paddleWiden = false; 
 		
 		if(xpos + 20 > GameLoop.x && xpos < GameLoop.x+GameLoop.paddlewidth && ypos + 20 > GameLoop.y && ypos < GameLoop.y + GameLoop.paddleheight) { //Hit Detection
 			//System.out.println(powerid);
@@ -60,15 +66,12 @@ public class Powerup {
 			}
 			
 			if(powerid == 2) {
-				GameLoop.paddlewidth = 250;
+				GameLoop.paddleWiden = true;
+				start = System.currentTimeMillis();
 			}
 			
 			if(powerid == 3) {
 				GameLoop.life++;
-			}
-			
-			if(powerid == 4) {
-				GameLoop.pierce = true;
 			}
 		}
 		
@@ -80,7 +83,7 @@ public class Powerup {
 	}
 	
 	public void newPower() {
-		int randomint = random.nextInt(4)+1;
+		int randomint = random.nextInt(3)+1;
 		this.powerid = randomint;
 	}
 
