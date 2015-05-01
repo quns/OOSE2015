@@ -1,4 +1,5 @@
 import java.awt.event.KeyEvent;
+import java.util.Random;
 import java.awt.Color;
 import java.awt.event.KeyListener;
 import java.applet.Applet;
@@ -14,17 +15,21 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 	public boolean left,right,spacebar,checkCollision;
 	public long start;
 	
+	Random random = new Random();
+	
+	public static int numberOfBlocks = 500;
+	
+	public static boolean paddleWiden = false;
+	
 	public static Ball[] balls = new Ball[10];
-	public static Block[] blocks = new Block[36];
+	public static Block[] blocks = new Block[numberOfBlocks];
 	public static Powerup[] powerups = new Powerup[5];
 	
 	public static int life = 3;
 	
 	public int counter = 0;
 	
-	public int numberOfBlocks = 36;
-	
-	public static boolean pierce;
+	int k = 36;
 	
 	public static int level = 1;
 	
@@ -37,13 +42,15 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 		paddleheight = 20;
 		paddlewidth = 120;
 		
-		blockCount = numberOfBlocks;
+		blockCount = 36;
 		
-		balls[0] = new Ball(50,250); //Initial ball.
+		balls[0] = new Ball(50,550); //Initial ball.
 		
 		for(int i = 0; i < 12; i++) blocks[i] = new Block(i*50,0); //Level Construction Example.
 		for(int i = 12; i < 24; i++) blocks[i] = new Block(i*50-600,50); //Make it into a function called "createLevel"
-		for(int i = 24; i < numberOfBlocks; i++) blocks[i] = new Block(i*50-1200,100); //and "if button pressed" create level so it builds once.
+		for(int i = 24; i < 36; i++) blocks[i] = new Block(i*50-1200,100); //and "if button pressed" create level so it builds once.
+		
+		for(int i = 36; i < blocks.length; i++) blocks[i] = new Block(900,800);
 		
 		for(int i = 1; i < balls.length; i++){ //Other balls
 			balls[i] = new Ball(850,650);
@@ -57,6 +64,11 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 			ballCount = balls[0].alive+balls[1].alive+balls[2].alive+balls[3].alive+balls[4].alive+balls[5].alive+balls[6].alive+balls[7].alive+balls[8].alive+balls[9].alive;
 			powerupsCount = powerups[0].alive+powerups[1].alive+powerups[2].alive+powerups[3].alive+powerups[4].alive;
 			
+			if(blockCount < 0) blockCount = k;
+			
+			if(paddleWiden == true) paddlewidth = 250;
+			else paddlewidth = 120;
+			
 			if(ballCount == 0) {
 				if(pause) {
 					life--;
@@ -66,6 +78,9 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 			
 			if(life == 0) {
 				gameover = true;
+			}
+			
+			if(gameover == true) {
 				if(spacebar) {
 					createLevel(level);
 				}
@@ -73,6 +88,7 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 			
 			if(blockCount == 0 && spacebar) {
 				level++;
+				if(level >= 4) level = 1;
 				createLevel(level);
 			}
 			
@@ -106,7 +122,7 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 	}
 	
 	public void createLevel(int lev) {
-		blockCount = numberOfBlocks;
+		blockCount = k;
 		life = 3;
 		gameover = false;
 		
@@ -118,22 +134,70 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 		}
 		
 		if (lev == 1) {
-			for(int i = 0; i < 12; i++) blocks[i].setPos(i*50,0); //Level Construction Example.
-			for(int i = 12; i < 24; i++) blocks[i].setPos(i*50-600,50); //Make it into a function called "createLevel"
-			for(int i = 24; i < numberOfBlocks; i++) blocks[i].setPos(i*50-1200,100); //and "if button pressed" create level so it builds once.
+			for(int i = 0; i < 12; i++) blocks[i] = new Block (i*50,0); //Level Construction Example.
+			for(int i = 12; i < 24; i++) blocks[i] = new Block (i*50-600,50); //Make it into a function called "createLevel"
+			for(int i = 24; i < 36; i++) blocks[i] = new Block(i*50-1200,100); //and "if button pressed" create level so it builds once.
 			for(int i = 0; i < blocks.length; i++) blocks[i].health = 1;
+			k = 36;
 		}
 		
 		else if (lev == 2) {
-			for(int i = 0; i < blocks.length; i++) blocks[i].setPos(50,50);
-			for(int i = 0; i < blocks.length; i++) blocks[i].health = 1;
+			
 		}
 		
 		else if(lev == 3) {
-			for(int i = 0; i < blocks.length; i++) blocks[i].setPos(50,50);
-			for(int i = 0; i < blocks.length; i++) blocks[i].health = 1;
+			blocks[0] = new Block(380,200);
+			blocks[0].health = 3;
+			blocks[1] = new Block(290,150);
+			blocks[2] = new Block(335,150);
+			blocks[3] = new Block(380,150);
+			blocks[4] = new Block(425,150);
+			blocks[5] = new Block(470,150);
+			blocks[6] = new Block(290,250);
+			blocks[7] = new Block(335,250);
+			blocks[8] = new Block(380,250);
+			blocks[9] = new Block(425,250);
+			blocks[10] = new Block(470,250);
+			blocks[11] = new Block(290,175);
+			blocks[12] = new Block(290,200);
+			blocks[13] = new Block(290,225);
+			blocks[14] = new Block(470,175);
+			blocks[15] = new Block(470,200);
+			blocks[16] = new Block(470,225);
+			blocks[17] = new Block(380,75);
+			blocks[18] = new Block(380,325);
+			blocks[19] = new Block(100,200);
+			blocks[20] = new Block(650,200);
+			
+			blocks[21] = new Block(510,130);
+			blocks[22] = new Block(555,105);
+			blocks[23] = new Block(600,130);
+			
+			blocks[24] = new Block(250,130);
+			blocks[25] = new Block(205,105);
+			blocks[26] = new Block(160,130);
+			
+			blocks[27] = new Block(510,270);
+			blocks[28] = new Block(550,290);
+			blocks[29] = new Block(590,310);
+			
+			blocks[30] = new Block(250,270);
+			blocks[31] = new Block(210,290);
+			blocks[32] = new Block(170,310);
+			
+			blocks[33] = new Block(250-135,130-25);
+			blocks[34] = new Block(205-135,105-25);
+			blocks[35] = new Block(160-135,130-25);
+			
+			blocks[36] = new Block(510+135,130-25);
+			blocks[37] = new Block(555+135,105-25);
+			blocks[38] = new Block(600+135,130-25);
+			
+			for(int i = 1; i <= 39; i++) {
+				blocks[i].health = random.nextInt(2)+1;;
+			}
+			blockCount = 39;
 		}
-		if(lev == 4) lev = 1;
 	}
 	
 	public void keyPressed(KeyEvent e) { //Register key-presses
