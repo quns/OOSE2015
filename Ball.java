@@ -70,23 +70,21 @@ public class Ball {
 					}
 				}
 			}
-		}
-		
-		for(int i = 0; i < GameLoop.blocks.length;i++) { //Block collision Right
-			if(xpos > GameLoop.blocks[i].xpos+GameLoop.blocks[i].width && xpos < GameLoop.blocks[i].xpos+GameLoop.blocks[i].width+5 && ypos + diameter > GameLoop.blocks[i].ypos && ypos < GameLoop.blocks[i].ypos + GameLoop.blocks[i].height) {//Left collision
+			
+			else if(xpos > GameLoop.blocks[i].xpos+GameLoop.blocks[i].width && xpos < GameLoop.blocks[i].xpos+GameLoop.blocks[i].width+5 && ypos + diameter > GameLoop.blocks[i].ypos && ypos < GameLoop.blocks[i].ypos + GameLoop.blocks[i].height) {//Left collision
 				speedX *= -1;
 				GameLoop.blocks[i].health--;
-				if(GameLoop.blocks[i].health == 0) GameLoop.blockCount--;
+				if(GameLoop.blocks[i].health <= 0) GameLoop.blockCount--;
+			}
+			
+			else if(xpos > GameLoop.blocks[i].xpos && xpos < GameLoop.blocks[i].xpos-5 && ypos + diameter > GameLoop.blocks[i].ypos && ypos < GameLoop.blocks[i].ypos + GameLoop.blocks[i].height) {//Left collision
+				speedX *= -1;
+				GameLoop.blocks[i].health--;
+				if(GameLoop.blocks[i].health <= 0) GameLoop.blockCount--;
 			}
 		}
 		
-		for(int i = 0; i < GameLoop.blocks.length;i++) { //Block collision Left
-			if(xpos > GameLoop.blocks[i].xpos && xpos < GameLoop.blocks[i].xpos-5 && ypos + diameter > GameLoop.blocks[i].ypos && ypos < GameLoop.blocks[i].ypos + GameLoop.blocks[i].height) {//Left collision
-				speedX *= -1;
-				GameLoop.blocks[i].health--;
-				if(GameLoop.blocks[i].health == 0) GameLoop.blockCount--;
-			}
-		}
+		
 		
 		if (xpos < 0 || xpos > 780) { //Reverse direction if ball hits sides
 			speedX *= -1;
@@ -146,4 +144,3 @@ public class Ball {
 	}
 	
 }
-
