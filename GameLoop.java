@@ -142,7 +142,106 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 		}
 		
 		else if (lev == 2) {
+			blockCount = 75;
+			blocks[0] = new Block(25,25);
+			blocks[1] = new Block(75,25);
+			blocks[2] = new Block(125,25);
+			blocks[3] = new Block(175,25);
+			blocks[4] = new Block(225,25);
+			blocks[5] = new Block(275,25);
 			
+			blocks[6] = new Block(50,55);
+			blocks[7] = new Block(100,55);
+			blocks[8] = new Block(150,55);
+			blocks[9] = new Block(200,55);
+			blocks[10] = new Block(250,55);
+			
+			blocks[11] = new Block(75,85);
+			blocks[12] = new Block(125,85);
+			blocks[13] = new Block(175,85);
+			blocks[14] = new Block(225,85);
+			
+			blocks[15] = new Block(100,115);
+			blocks[16] = new Block(150,115);
+			blocks[17] = new Block(200,115);
+			
+			blocks[18] = new Block(125,145);
+			blocks[19] = new Block(175,145);
+			
+			blocks[20] = new Block(150,175);
+			
+			blocks[21] = new Block(450+25,25);
+			blocks[22] = new Block(450+75,25);
+			blocks[23] = new Block(450+125,25);
+			blocks[24] = new Block(450+175,25);
+			blocks[25] = new Block(450+225,25);
+			blocks[26] = new Block(450+275,25);
+			
+			blocks[27] = new Block(450+50,55);
+			blocks[28] = new Block(450+100,55);
+			blocks[29] = new Block(450+150,55);
+			blocks[30] = new Block(450+200,55);
+			blocks[31] = new Block(450+250,55);
+			
+			blocks[32] = new Block(450+75,85);
+			blocks[33] = new Block(450+125,85);
+			blocks[34] = new Block(450+175,85);
+			blocks[35] = new Block(450+225,85);
+			
+			blocks[36] = new Block(450+100,115);
+			blocks[37] = new Block(450+150,115);
+			blocks[38] = new Block(450+200,115);
+			
+			blocks[39] = new Block(450+125,145);
+			blocks[40] = new Block(450+175,145);
+			
+			blocks[41] = new Block(450+150,175);
+			
+			blocks[42] = new Block(250,275);
+			blocks[43] = new Block(300,275);
+			blocks[44] = new Block(350,275);
+			blocks[45] = new Block(400,275);
+			blocks[46] = new Block(450,275);
+			blocks[47] = new Block(500,275);
+			
+			blocks[48] = new Block(275,245);
+			blocks[49] = new Block(325,245);
+			blocks[50] = new Block(375,245);
+			blocks[51] = new Block(425,245);
+			blocks[52] = new Block(475,245);
+			
+			blocks[53] = new Block(300,215);
+			blocks[54] = new Block(350,215);
+			blocks[55] = new Block(400,215);
+			blocks[56] = new Block(450,215);
+			
+			blocks[57] = new Block(325,185);
+			blocks[58] = new Block(375,185);
+			blocks[59] = new Block(425,185);
+			
+			blocks[60] = new Block(350,155);
+			blocks[61] = new Block(400,155);
+			
+			blocks[62] = new Block(375,125);
+			
+			blocks[63] = new Block(25,275);
+			blocks[64] = new Block(75,275);
+			blocks[65] = new Block(25,245);
+			blocks[66] = new Block(75,245);
+			blocks[67] = new Block(125,245);
+			blocks[68] = new Block(125,275);
+			
+			blocks[69] = new Block(600+25,275);
+			blocks[70] = new Block(600+75,275);
+			blocks[71] = new Block(600+25,245);
+			blocks[72] = new Block(600+75,245);
+			blocks[73] = new Block(600+125,245);
+			blocks[74] = new Block(600+125,275);
+			
+			for(int i = 0; i <= 74; i++) {
+				blocks[i].health = random.nextInt(3)+1;;
+			}
+			k = 75;
 		}
 		
 		else if(lev == 3) {
@@ -196,7 +295,7 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 			for(int i = 1; i <= 39; i++) {
 				blocks[i].health = random.nextInt(2)+1;;
 			}
-			blockCount = 39;
+			k = 39;
 		}
 	}
 	
