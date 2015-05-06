@@ -2,12 +2,14 @@ import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.Random;
 
 public class Ball {
 	int xpos,ypos;
 	float speedX = 3f;
 	float speedY = 3f;
 	int diameter;
+	Random random = new Random();
 	
 	int alive = 1;
 	boolean checkCollision = true;
@@ -43,27 +45,27 @@ public class Ball {
 				if(GameLoop.blocks[i].health == 0) GameLoop.blockCount--;
 				
 				if(GameLoop.powerupsCount < 5) { //Add it so they randomly spawn instead of every time
-					if(GameLoop.powerups[0].alive == 0) {
+					if(GameLoop.powerups[0].alive == 0 && random.nextInt(5)+1 == 1) {
 						GameLoop.powerups[0].setPos(GameLoop.blocks[i].xpos,GameLoop.blocks[i].ypos);
 						GameLoop.powerups[0].alive = 1;
 						GameLoop.powerups[0].newPower();
 					}
-					else if(GameLoop.powerups[1].alive == 0) {
+					else if(GameLoop.powerups[1].alive == 0 && random.nextInt(5)+1 == 1) {
 						GameLoop.powerups[1].setPos(GameLoop.blocks[i].xpos,GameLoop.blocks[i].ypos);
 						GameLoop.powerups[1].alive = 1;
 						GameLoop.powerups[1].newPower();
 					}
-					else if(GameLoop.powerups[2].alive == 0) {
+					else if(GameLoop.powerups[2].alive == 0 && random.nextInt(5)+1 == 1) {
 						GameLoop.powerups[2].setPos(GameLoop.blocks[i].xpos,GameLoop.blocks[i].ypos);
 						GameLoop.powerups[2].alive = 1;
 						GameLoop.powerups[2].newPower();
 					}
-					else if(GameLoop.powerups[3].alive == 0) {
+					else if(GameLoop.powerups[3].alive == 0 && random.nextInt(5)+1 == 1) {
 						GameLoop.powerups[3].setPos(GameLoop.blocks[i].xpos,GameLoop.blocks[i].ypos);
 						GameLoop.powerups[3].alive = 1;
 						GameLoop.powerups[3].newPower();
 					}
-					else if(GameLoop.powerups[4].alive == 0) {
+					else if(GameLoop.powerups[4].alive == 0 && random.nextInt(5)+1 == 1) {
 						GameLoop.powerups[4].setPos(GameLoop.blocks[i].xpos,GameLoop.blocks[i].ypos);
 						GameLoop.powerups[4].alive = 1;
 						GameLoop.powerups[4].newPower();
