@@ -64,6 +64,9 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 			ballCount = balls[0].alive+balls[1].alive+balls[2].alive+balls[3].alive+balls[4].alive+balls[5].alive+balls[6].alive+balls[7].alive+balls[8].alive+balls[9].alive;
 			powerupsCount = powerups[0].alive+powerups[1].alive+powerups[2].alive+powerups[3].alive+powerups[4].alive;
 			
+			if(x < 0) x = 0;
+			if(x > 800-paddlewidth) x = 800-paddlewidth; 
+			
 			if(blockCount < 0) blockCount = k;
 			
 			if(paddleWiden == true) paddlewidth = 250;
@@ -245,6 +248,7 @@ public class GameLoop extends Applet implements Runnable, KeyListener{
 		}
 		
 		else if(lev == 3) {
+			blockCount = 39;
 			blocks[0] = new Block(380,200);
 			blocks[0].health = 3;
 			blocks[1] = new Block(290,150);
