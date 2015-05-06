@@ -3,7 +3,7 @@ import java.awt.Graphics;
 import java.awt.Color;
 
 public class Breakout extends GameLoop{ //Options and setup. Launch this for the rest to work.
-
+//FOR THE PROGRAM TO WORK, LAUNCH THIS AS THE MAIN AND AS AN APPLET.
 	public void init() {
 		setSize(800,600);
 		
@@ -45,4 +45,4 @@ public class Breakout extends GameLoop{ //Options and setup. Launch this for the
 		paint(g);
 	}
 
-} 
+}
