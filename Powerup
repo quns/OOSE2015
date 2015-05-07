@@ -3,40 +3,40 @@ import java.awt.Color;
 import java.util.Random;
 
 public class Powerup {
-	int xpos,ypos;
-	int powerid;
-	int alive = 1;
-	Random random = new Random();
-	long start;
-	long elapsedTime;
+	int xpos,ypos; //Powerup x,y position
+	int powerid; //Which powerup the powerup grants
+	int alive = 1; //If the powerup is active
+	Random random = new Random(); //Random RNG to determine which powerup it grants
+	long start; //Timer start
+	long elapsedTime; //Timer elapsed
 	
-	public Powerup(int x, int y) {
-		this.xpos = x;
-		this.ypos = y;
-		int randomint = random.nextInt(3)+1;
-		this.powerid = randomint;
+	public Powerup(int x, int y) { //Constructor
+		this.xpos = x; //X position
+		this.ypos = y; //Y position
+		int randomint = random.nextInt(3)+1; //Grant random number
+		this.powerid = randomint; //Assign random number to powerid
 	}
 	
-	public void update() {
-		if(alive == 1) ypos +=2;
-		if(alive == 0) ypos = 650;
+	public void update() { //Update
+		if(alive == 1) ypos +=2; //Make powerup fall continually if it is active
+		if(alive == 0) ypos = 650; //If the powerup is inactive, move it ouside the active playing field
 		
-		if(ypos > 600) alive = 0;
+		if(ypos > 600) alive = 0; //If powerup hits bottom, make it inactive
 		
-		elapsedTime = System.currentTimeMillis() - start;
+		elapsedTime = System.currentTimeMillis() - start; //Calculate elapsed time.
 		
-		if(elapsedTime > 10000 && elapsedTime < 10050 ) GameLoop.paddleWiden = false; 
+		if(elapsedTime > 10000 && elapsedTime < 10050 ) GameLoop.paddleWiden = false; //Disable the paddle widdening powerup if 10 seconds pass. 
 		
-		if(xpos + 20 > GameLoop.x && xpos < GameLoop.x+GameLoop.paddlewidth && ypos + 20 > GameLoop.y && ypos < GameLoop.y + GameLoop.paddleheight) { //Hit Detection
-			//System.out.println(powerid);
-			alive = 0;
-			//PLACE POWERUP CODE BELOW
-			if(powerid == 1) { //Find a better way to do the ballcount
-				if(GameLoop.balls[0].alive == 0) {
-				GameLoop.balls[0].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500);
-				GameLoop.balls[0].alive = 1;
-				GameLoop.balls[0].speedX = 2;
-				GameLoop.balls[0].speedY = -2;
+		//Powerup paddle collision detection.
+		if(xpos + 20 > GameLoop.x && xpos < GameLoop.x+GameLoop.paddlewidth && ypos + 20 > GameLoop.y && ypos < GameLoop.y + GameLoop.paddleheight) {
+			alive = 0; //Set powerup to inactive
+			
+			if(powerid == 1) { //Detectes which effect to grant to play, depending on powerid.
+				if(GameLoop.balls[0].alive == 0) { //First one spawns an extra ball, else if used so it doesen't remove an existing ball from the screen
+				GameLoop.balls[0].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500); //Spawn ball above player
+				GameLoop.balls[0].alive = 1; //Set it to alive
+				GameLoop.balls[0].speedX = 2; //horizontal speed 2
+				GameLoop.balls[0].speedY = -2; //Vertical speed 2 upwards
 				}
 				else if(GameLoop.balls[1].alive == 0) {
 					GameLoop.balls[1].setPos((int)(GameLoop.x+GameLoop.paddlewidth*0.5), 500);
@@ -65,31 +65,30 @@ public class Powerup {
 				
 			}
 			
-			if(powerid == 2) {
+			if(powerid == 2) { //Second powerup widens the paddle by enabling the paddle widdening boolean.
 				GameLoop.paddleWiden = true;
-				start = System.currentTimeMillis();
+				start = System.currentTimeMillis(); //Time since paddle widen was activated
 			}
 			
-			if(powerid == 3) {
+			if(powerid == 3) { //Third powerup grants an extra life
 				GameLoop.life++;
 			}
 		}
 		
 	}
 	
-	public void setPos(int x, int y) {
+	public void setPos(int x, int y) { //Manually set x,y position
 		xpos = x;
 		ypos = y;
 	}
 	
-	public void newPower() {
+	public void newPower() { //Randomizes which power the powerup grants
 		int randomint = random.nextInt(3)+1;
 		this.powerid = randomint;
 	}
 
-	public void display(Graphics d) {
-		//d.drawOval(xpos, ypos, 20,20); 
-		if(powerid == 1) {
+	public void display(Graphics d) { //Display the powerup
+		if(powerid == 1) { //Changes the color of the powerup depending on the powerid
 			d.setColor(Color.red);
 			d.fillOval(xpos, ypos, 20, 20);
 		}
@@ -106,7 +105,4 @@ public class Powerup {
 			d.fillOval(xpos, ypos, 20, 20);
 		}
 	}
-	
-	//Current powerups. Penetration ball, multi ball, paddle widener
-
 }
